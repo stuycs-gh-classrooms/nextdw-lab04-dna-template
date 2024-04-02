@@ -152,7 +152,7 @@ boolean containsProtein(String strand) {
 
   //need to have at least 5 codons, or
   //15 nucleaotides, between start and end
-  return start + sequenceLength >= 18;
+  return sequenceLength >= 18;
 }//containsExon
 
 void drawStrand(String dna, int x, int y, int sz) {
