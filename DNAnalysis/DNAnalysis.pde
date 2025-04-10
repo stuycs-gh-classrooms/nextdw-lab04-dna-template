@@ -26,16 +26,39 @@ void setup() {
 }//setup
 
 /*=====================================
+intFindProteinEnd(String strand)
+
+End codons are taa, tga, and tag
+Returns the index of the first end codon in strand.
+Returns -1 if there is no end codon in strand.
+=====================================*/
+int findProteinEnd(String strand) {
+  return -1;
+}//findProteinEnd
+
+/*=====================================
+boolean containsProtein(String dna)
+
+Returns true if dna contains at least one protein.
+For our purposes, a DNA sequence contains a protein if:
+    It has a start codon
+    It has an end codon
+    The number of nucleotides between the start and end is a multiple of 3 (i.e. there are no nucleotides unattached to a codon)
+    It has at least 5 other codons between those 2. (this is not biologically accurate, in reality this is closer to 430 codons).
+=====================================*/
+boolean containsProtein(String strand) {
+  return false;
+}//containsProtein
+
+/*=====================================
 getProtein(String strand)
 
-Find the indices of the start and end codons in strand.
-If strand does not contain a start or end, return ""
-If the number of neucleotides between start and end
-is not a multiple of 3, return ""
-If there are not at least 5 consdons between start and
-end, return ""
-Otherwise, return the neucleotide sequence encoding a
-protein, not including the start and end codons.
+If strand contains a protien as defined in
+the description of containsProtein, return
+the first protien present.
+
+If strand does not contain a protein, return
+the empty string.
 =====================================*/
 String getProtein(String strand) {
   return "";
@@ -115,45 +138,6 @@ void drawProtein(String dna, int x, int y, int sz) {
 }//drawProtein
 
 
-
-int findProteinEnd(String strand) {
-  int end0 = strand.indexOf("taa");
-  int end1 = strand.indexOf("tga");
-  int end2 = strand.indexOf("tag");
-
-  //if no end, return -1
-  if (end0 + end1 + end2 == -3) {
-    return -1;
-  }//no end codon
-
-  //? : is the ternary operator. It's like
-  // an if/else statement that returns a value.
-  // boolean ? true return : false return
-  end0 = end0 == -1 ? strand.length() : end0;
-  end1 = end1 == -1 ? strand.length() : end1;
-  end2 = end2 == -1 ? strand.length() : end2;
-
-  return min(end0, end1, end2);
-}//findProteinEnd
-
-boolean containsProtein(String strand) {
-  int start = strand.indexOf("atg");
-  int end = findProteinEnd(strand);
-
-  if (start == -1 || end == -1) {
-    return false;
-  }//missing start or end
-
-  int sequenceLength = end - start;
-  //if not a multiple of 3, there are "loose" nucleotides
-  if (sequenceLength % 3 != 0) {
-    return false;
-  }//invalid length
-
-  //need to have at least 5 codons, or
-  //15 nucleaotides, between start and end
-  return sequenceLength >= 18;
-}//containsExon
 
 void drawStrand(String dna, int x, int y, int sz) {
   textAlign(CENTER, CENTER);
